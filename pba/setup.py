@@ -27,7 +27,7 @@ def create_parser(state):
         '--dataset',
         default='cifar10',
         choices=('cifar10', 'cifar100', 'svhn', 'svhn-full', 'test'))
-    parser.add_argument('--image_size', type=int, default=32, 'Width/height of data.')
+    parser.add_argument('--image_size', type=int, default=32, help='Width/height of data.')
     parser.add_argument(
         '--recompute_dset_stats',
         action='store_true',
