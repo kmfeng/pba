@@ -221,6 +221,8 @@ class DataSet(object):
         test_data = test_data.reshape(10000, 3072)
         train_data = train_data.reshape(-1, 3, 32, 32)
         test_data = test_data.reshape(-1, 3, 32, 32)
+        train_labels = np.array(train_labels, dtype=np.int32)
+        test_labels = np.array(test_labels, dtype=np.int32)
 
         self.test_images, self.test_labels = test_data, test_labels
         train_data, train_labels = shuffle_data(train_data, train_labels)
@@ -283,10 +285,10 @@ class DataSet(object):
         """Load random data and labels."""
         self.num_classes = 200
         self.train_images = np.random.random((hparams.train_size, 3, 224, 224))
-        self.val_images = np.random.random((hparams.val_size, 3, 224, 224))
+        self.val_images = np.random.random((hparams.validation_size, 3, 224, 224))
         self.test_images = np.random.random((hparams.test_size, 3, 224, 224))
         self.train_labels = np.random.randint(0, self.num_classes, (hparams.train_size))
-        self.val_labels = np.random.randint(0, self.num_classes, (hparams.val_size))
+        self.val_labels = np.random.randint(0, self.num_classes, (hparams.validation_size))
         self.test_labels = np.random.randint(0, self.num_classes, (hparams.test_size))
 
     def load_data(self, hparams):
