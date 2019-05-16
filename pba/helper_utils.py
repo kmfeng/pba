@@ -100,7 +100,9 @@ def get_lr(curr_epoch, hparams, iteration=None):
         lr = cosine_lr(hparams.lr, curr_epoch, iteration, batches_per_epoch,
                        hparams.num_epochs)
     else:
-        raise ValueError('unknown model+dataset')
+        lr = cosine_lr(hparams.lr, curr_epoch, iteration, batches_per_epoch,
+                       hparams.num_epochs)
+        tf.logging.warn('Default to cosine learning rate.')
     return lr
 
 
