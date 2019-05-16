@@ -78,6 +78,8 @@ class DataSet(object):
         else:
             mean = self.train_images.mean(axis=(0, 1, 2))
             std = self.train_images.std(axis=(0, 1, 2))
+            self.augmentation_transforms.MEANS[hparams.dataset + '_' + str(hparams.train_size)] = mean
+            self.augmentation_transforms.STDS[hparams.dataset + '_' + str(hparams.train_size)] = std
         tf.logging.info('mean:{}    std: {}'.format(mean, std))
 
         self.train_images = (self.train_images - mean) / std
@@ -283,13 +285,14 @@ class DataSet(object):
 
     def load_test(self, hparams):
         """Load random data and labels."""
+        test_size = 200
         self.num_classes = 200
-        self.train_images = np.random.random((hparams.train_size, 3, 224, 224))
-        self.val_images = np.random.random((hparams.validation_size, 3, 224, 224))
-        self.test_images = np.random.random((hparams.test_size, 3, 224, 224))
+        self.train_images = np.random.random((hparams.train_size, 3, 224, 224)) * 255
+        self.val_images = np.random.random((hparams.validation_size, 3, 224, 224)) * 255
+        self.test_images = np.random.random((test_size, 3, 224, 224)) * 255
         self.train_labels = np.random.randint(0, self.num_classes, (hparams.train_size))
         self.val_labels = np.random.randint(0, self.num_classes, (hparams.validation_size))
-        self.test_labels = np.random.randint(0, self.num_classes, (hparams.test_size))
+        self.test_labels = np.random.randint(0, self.num_classes, (test_size))
 
     def load_data(self, hparams):
         """Load raw data from specified dataset.
