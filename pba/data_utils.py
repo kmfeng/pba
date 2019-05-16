@@ -402,7 +402,7 @@ class DataSet(object):
             elif 'svhn' in self.hparams.dataset:
                 pass
             else:
-                tf.logging.warn('Using default random flip and crop.')
+                tf.logging.log_first_n(tf.logging.WARN, 'Using default random flip and crop.', 3)
                 final_img = self.augmentation_transforms.random_flip(
                     self.augmentation_transforms.zero_pad_and_crop(
                         final_img, 4))
@@ -418,7 +418,7 @@ class DataSet(object):
                     final_img = self.augmentation_transforms.cutout_numpy(
                         final_img, size=20)
                 else:
-                    tf.logging.warn('Using default cutout size (16x16)')
+                    tf.logging.log_first_n(tf.logging.WARN, 'Using default cutout size (16x16).', 3)
                     final_img = self.augmentation_transforms.cutout_numpy(
                         final_img)
             final_imgs.append(final_img)
