@@ -62,6 +62,7 @@ def create_parser(state):
     parser.add_argument('--lr', type=float, default=0.1, help='learning rate')
     parser.add_argument('--wd', type=float, default=0.0005, help='weight decay')
     parser.add_argument('--bs', type=int, default=128, help='batch size')
+    parser.add_argument('--test_bs', type=int, default=25, help='test batch size')
     parser.add_argument('--num_samples', type=int, default=1, help='Number of Ray samples')
 
     if state == 'train':
@@ -127,7 +128,8 @@ def create_hparams(state, FLAGS):  # pylint: disable=invalid-name
         no_cutout=FLAGS.no_cutout,
         recompute_dset_stats=FLAGS.recompute_dset_stats,
         lr=FLAGS.lr,
-        weight_decay_rate=FLAGS.wd)
+        weight_decay_rate=FLAGS.wd,
+        test_batch_size=FLAGS.test_bs)
 
     if state == 'train':
         hparams.add_hparam('no_aug', FLAGS.no_aug)

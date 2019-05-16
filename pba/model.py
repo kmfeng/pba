@@ -119,7 +119,7 @@ class Model(object):
         self.reuse = None if (mode == 'train') else True
         self.batch_size = self.hparams.batch_size
         if mode == 'eval':
-            self.batch_size = 25
+            self.batch_size = self.hparams.test_batch_size
 
     def _setup_images_and_labels(self, dataset):
         """Sets up image and label placeholders for the model."""
