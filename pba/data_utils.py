@@ -308,6 +308,7 @@ class DataSet(object):
             self.test_labels: Testing ground truth labels.
             self.num_classes: Number of classes.
             self.num_train: Number of training examples.
+            self.image_size: Width/height of image.
 
         Args:
             hparams: tf.hparams object.
@@ -322,6 +323,7 @@ class DataSet(object):
             raise ValueError('unimplemented')
 
         self.num_train = self.train_images.shape[0]
+        self.image_size = self.train_images.shape[2]
         self.train_labels = np.eye(self.num_classes)[np.array(
             self.train_labels, dtype=np.int32)]
         self.val_labels = np.eye(self.num_classes)[np.array(
@@ -331,6 +333,7 @@ class DataSet(object):
         assert len(self.train_images) == len(self.train_labels)
         assert len(self.val_images) == len(self.val_labels)
         assert len(self.test_images) == len(self.test_labels)
+        assert self.train_images.shape[2] == self.train_images.shape[3]
 
     def next_batch(self, iteration=None):
         """Return the next minibatch of augmented data."""
@@ -359,7 +362,7 @@ class DataSet(object):
                         epoch_policy,
                         data,
                         dset=dset,
-                        image_size=self.hparams.image_size)
+                        image_size=self.image_size)
                 else:
                     # apply PBA policy)
                     if isinstance(self.policy[0], list):
@@ -372,14 +375,14 @@ class DataSet(object):
                                 data,
                                 self.hparams.aug_policy,
                                 dset,
-                                image_size=self.hparams.image_size)
+                                image_size=self.image_size)
                         else:
                             final_img = self.augmentation_transforms.apply_policy(
                                 self.policy[iteration],
                                 data,
                                 self.hparams.aug_policy,
                                 dset,
-                                image_size=self.hparams.image_size)
+                                image_size=self.image_size)
                     elif isinstance(self.policy, list):
                         # policy schedule
                         final_img = self.augmentation_transforms.apply_policy(
@@ -387,7 +390,7 @@ class DataSet(object):
                             data,
                             self.hparams.aug_policy,
                             dset,
-                            image_size=self.hparams.image_size)
+                            image_size=self.image_size)
                     else:
                         raise ValueError('Unknown policy.')
             else:

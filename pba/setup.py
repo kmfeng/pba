@@ -27,7 +27,6 @@ def create_parser(state):
         '--dataset',
         default='cifar10',
         choices=('cifar10', 'cifar100', 'svhn', 'svhn-full', 'test'))
-    parser.add_argument('--image_size', type=int, default=32, help='Width/height of data.')
     parser.add_argument(
         '--recompute_dset_stats',
         action='store_true',
@@ -126,7 +125,6 @@ def create_hparams(state, FLAGS):  # pylint: disable=invalid-name
         explore=FLAGS.explore,
         aug_policy=FLAGS.aug_policy,
         no_cutout=FLAGS.no_cutout,
-        image_size=FLAGS.image_size,
         recompute_dset_stats=FLAGS.recompute_dset_stats,
         lr=FLAGS.lr,
         weight_decay_rate=FLAGS.wd)
