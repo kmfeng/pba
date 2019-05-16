@@ -127,7 +127,9 @@ def create_hparams(state, FLAGS):  # pylint: disable=invalid-name
         aug_policy=FLAGS.aug_policy,
         no_cutout=FLAGS.no_cutout,
         image_size=FLAGS.image_size,
-        recompute_dset_stats=FLAGS.recompute_dset_stats)
+        recompute_dset_stats=FLAGS.recompute_dset_stats,
+        lr=FLAGS.lr,
+        weight_decay_rate=FLAGS.wd)
 
     if state == 'train':
         hparams.add_hparam('no_aug', FLAGS.no_aug)
